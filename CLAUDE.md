@@ -3,26 +3,29 @@
 Bilingual (EN/ZH) open-source recipe site for Claude Code users — workflow patterns, code recipes, and design techniques distilled from 21+ shipped projects.
 
 ## Tech Stack
-TypeScript/HTML SPA on Cloudflare Pages. Esbuild bundler. Tailwind CSS v4. No framework — vanilla TypeScript with hash-based routing.
+TypeScript/HTML SPA on Cloudflare Pages. Esbuild bundler (build.mjs). No framework — vanilla TypeScript with hash-based routing. Plain CSS (no Tailwind).
 
 ## Structure
 ```
 Cookbook/
   index.html          # Entry point
+  build.mjs           # Esbuild bundler script
   src/
     main.ts           # App entry, router, search
     i18n.ts           # EN/ZH translation system
-    recipes/          # Recipe markdown files (parsed at build time)
-    components/       # Sidebar, recipe card, code block, search
-    styles/           # Tailwind + custom terminal theme
+    router.ts         # Hash-based SPA router
+    search.ts         # Client-side search
+    recipes/
+      index.ts        # All 10 recipes as TypeScript objects
+      types.ts        # Recipe interface
+    components/       # home, sidebar, topbar, recipe-page, recipe-card, category
+    styles/
+      main.css        # Terminal theme (custom properties, no framework)
   public/
-    og-image.png      # Social preview
-  recipes/            # Source markdown recipe files
-    workflow/         # Workflow recipes
-    code/             # Code recipes
-    design/           # Design recipes
+    og-image.svg      # Social preview
+    _headers          # Cloudflare security headers
+    robots.txt
   dist/               # Build output
-  esbuild.config.ts   # Build config
 ```
 
 ## Entry Point

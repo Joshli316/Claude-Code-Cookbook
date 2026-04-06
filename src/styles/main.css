@@ -287,7 +287,7 @@ body {
 /* Content Area */
 .content {
   flex: 1;
-  max-width: 800px;
+  max-width: 960px;
   width: 100%;
   margin: 0 auto;
   padding: 32px;
@@ -395,6 +395,91 @@ a:hover {
   border: 1px solid var(--border);
 }
 
+/* Section Headings — terminal-native */
+.section-heading {
+  text-align: left;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent-green);
+}
+
+/* Category Bar — horizontal chips, not a card grid */
+.category-bar {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.category-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  text-decoration: none;
+  flex: 1;
+  min-width: 140px;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.category-chip:hover {
+  border-color: var(--accent-green);
+  background: rgba(0, 232, 143, 0.03);
+}
+
+.category-chip-icon {
+  font-size: 1.1rem;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(0, 232, 143, 0.08);
+}
+
+.category-chip-workflow .category-chip-icon {
+  background: rgba(0, 232, 143, 0.08);
+  color: var(--accent-green);
+}
+
+.category-chip-code .category-chip-icon {
+  background: rgba(0, 188, 212, 0.08);
+  color: var(--accent-cyan);
+}
+
+.category-chip-design .category-chip-icon {
+  background: rgba(245, 166, 35, 0.08);
+  color: var(--accent-amber);
+}
+
+.category-chip-label {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.category-chip-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+/* Home section spacing — varied, not uniform */
+.home-section {
+  margin-top: 36px;
+}
+
+.home-section-recipes {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
 /* Recipe Cards */
 .recipe-card {
   background: var(--surface);
@@ -403,15 +488,31 @@ a:hover {
   padding: 20px;
   text-decoration: none;
   display: block;
-  transition: border-color 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .recipe-card:hover {
   border-color: var(--accent-green);
+  box-shadow: 0 0 20px rgba(0, 232, 143, 0.06);
 }
 
 .recipe-card:active {
   transform: scale(0.98);
+}
+
+/* Featured recipe card — full-width with horizontal layout on desktop */
+.recipe-card-featured {
+  border-color: rgba(0, 232, 143, 0.2);
+  padding: 24px;
+}
+
+.recipe-card-featured .recipe-card-title {
+  font-size: 1.25rem;
+}
+
+.recipe-card-featured .recipe-card-desc {
+  -webkit-line-clamp: 3;
+  font-size: 0.9rem;
 }
 
 .sidebar-link:active {
@@ -449,6 +550,7 @@ a:hover {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
+  margin-top: 20px;
 }
 
 /* Code Blocks */
@@ -660,6 +762,36 @@ code:not(pre code) {
   .cards-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .recipe-card-featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-areas:
+      "title tags"
+      "desc  tags";
+    grid-template-columns: 1fr auto;
+    gap: 6px 48px;
+    padding: 28px 32px;
+  }
+
+  .recipe-card-featured .recipe-card-title {
+    grid-area: title;
+    font-size: 1.35rem;
+  }
+
+  .recipe-card-featured .recipe-card-desc {
+    grid-area: desc;
+    -webkit-line-clamp: unset;
+    align-self: start;
+  }
+
+  .recipe-card-featured .recipe-card-footer {
+    grid-area: tags;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: center;
+    gap: 8px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -707,12 +839,25 @@ code:not(pre code) {
     font-size: 0.9rem;
   }
 
+  .category-bar {
+    flex-direction: column;
+  }
+
   .recipe-nav {
     flex-direction: column;
   }
 
   .recipe-nav a {
     max-width: 100%;
+  }
+
+  .home-section {
+    margin-top: 24px;
+  }
+
+  .home-section-recipes {
+    margin-top: 36px;
+    padding-top: 24px;
   }
 }
 

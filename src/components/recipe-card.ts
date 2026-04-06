@@ -3,13 +3,14 @@
 import { getLang, t } from '../i18n';
 import type { Recipe } from '../recipes/types';
 
-export function renderRecipeCard(recipe: Recipe): string {
+export function renderRecipeCard(recipe: Recipe, featured = false): string {
   const lang = getLang();
   const title = lang === 'zh' ? recipe.titleZh : recipe.title;
   const desc = lang === 'zh' ? recipe.descriptionZh : recipe.description;
+  const cls = featured ? 'recipe-card recipe-card-featured' : 'recipe-card';
 
   return `
-    <a href="#/recipe/${recipe.slug}" class="recipe-card">
+    <a href="#/recipe/${recipe.slug}" class="${cls}">
       <div class="recipe-card-title">${title}</div>
       <div class="recipe-card-desc">${desc}</div>
       <div class="recipe-card-footer">
