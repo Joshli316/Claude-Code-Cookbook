@@ -42,7 +42,7 @@ const strings: Record<string, { en: string; zh: string }> = {
   'nav.github': { en: 'GitHub', zh: 'GitHub' },
 
   // Search
-  'search.placeholder': { en: 'Search recipes...', zh: '搜索食谱...' },
+  'search.placeholder': { en: 'Search by title, tag, or keyword...', zh: '按标题、标签或关键词搜索...' },
   'search.no_results': { en: 'No recipes found', zh: '未找到食谱' },
 
   // Language toggle
@@ -55,6 +55,9 @@ const strings: Record<string, { en: string; zh: string }> = {
   'recipe.next': { en: 'Next', zh: '下一篇' },
   'recipe.view_github': { en: 'View on GitHub', zh: '在 GitHub 查看' },
   'recipe.related': { en: 'Related Recipes', zh: '相关食谱' },
+  'recipe.share': { en: 'Copy link', zh: '复制链接' },
+  'recipe.share_copied': { en: 'Link copied!', zh: '链接已复制！' },
+  'search.results_count': { en: 'recipes found', zh: '个食谱' },
   'recipe.contributed_by': { en: 'by', zh: '作者' },
 
   // Errors
@@ -77,7 +80,7 @@ const strings: Record<string, { en: string; zh: string }> = {
 
   // Home
   'home.hero_title': { en: '21+ projects.<br>Patterns that work.', zh: '21+ 个项目。<br>经过验证的模式。' },
-  'home.hero_subtitle': { en: 'Workflow patterns, code recipes, and design techniques distilled from real Claude Code projects.', zh: '从真实 Claude Code 项目中提炼的工作流模式、代码方案和设计技巧。' },
+  'home.hero_subtitle': { en: 'Copy-paste patterns for planning, building, and shipping with Claude Code. Battle-tested across 21 projects.', zh: '用于规划、构建和交付 Claude Code 项目的即用模式。经 21 个项目实战验证。' },
   'home.featured': { en: 'Featured Recipes', zh: '精选食谱' },
   'home.all_recipes': { en: 'All Recipes', zh: '所有食谱' },
   'home.browse_category': { en: 'Browse by Category', zh: '按分类浏览' },

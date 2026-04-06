@@ -4,9 +4,11 @@ import type { Recipe } from './types';
 
 function cb(code: string, lang = 'typescript'): string {
   const escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return `<div class="code-block-wrapper">
-    <span class="code-block-lang">${lang}</span>
-    <button class="copy-btn">Copy</button>
+  const displayLang: Record<string, string> = { typescript: 'TypeScript', bash: 'Bash', json: 'JSON', css: 'CSS', markdown: 'Markdown', javascript: 'JavaScript', html: 'HTML' };
+  const label = displayLang[lang] || lang;
+  return `<div class="code-block-wrapper" aria-label="${label} code example">
+    <span class="code-block-lang">${label}</span>
+    <button class="copy-btn" aria-label="Copy code">Copy</button>
     <pre><code class="language-${lang}">${escaped}</code></pre>
   </div>`;
 }

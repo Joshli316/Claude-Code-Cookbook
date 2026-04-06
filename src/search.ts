@@ -48,10 +48,12 @@ export function handleSearch(query: string): void {
     return;
   }
 
-  resultsEl.innerHTML = matches.map(r => {
+  const countLabel = lang === 'zh' ? `${matches.length} 个食谱` : `${matches.length} recipes found`;
+  resultsEl.innerHTML = `<div style="padding:6px 14px;font-size:0.7rem;color:var(--text-secondary);border-bottom:1px solid var(--border);">${countLabel}</div>` +
+  matches.map(r => {
     const title = lang === 'zh' ? r.titleZh : r.title;
     return `
-      <div class="search-result-item" data-slug="${r.slug}">
+      <div class="search-result-item" role="option" data-slug="${r.slug}">
         <div class="search-result-title">${highlightMatch(title, query)}</div>
         <div class="search-result-meta">
           <span class="pill pill-${r.category}" style="font-size:0.65rem;">${r.category}</span>

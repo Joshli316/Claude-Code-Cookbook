@@ -1,0 +1,5 @@
+name = "claude-code-cookbook"
+compatibility_date = "2026-04-05"
+
+[site]
+bucket = "./dist"

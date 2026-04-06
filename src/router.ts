@@ -22,10 +22,18 @@ export function getCurrentRoute(): { page: string; param: string } {
     return { page: 'home', param: '' };
   }
   if (hash.startsWith('#/recipe/')) {
-    return { page: 'recipe', param: hash.replace('#/recipe/', '') };
+    const slug = hash.replace('#/recipe/', '');
+    if (/^[a-z0-9-]+$/.test(slug)) {
+      return { page: 'recipe', param: slug };
+    }
+    return { page: 'home', param: '' };
   }
   if (hash.startsWith('#/category/')) {
-    return { page: 'category', param: hash.replace('#/category/', '') };
+    const cat = hash.replace('#/category/', '');
+    if (['workflow', 'code', 'design'].includes(cat)) {
+      return { page: 'category', param: cat };
+    }
+    return { page: 'home', param: '' };
   }
 
   return { page: 'home', param: '' };

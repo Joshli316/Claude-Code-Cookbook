@@ -88,9 +88,14 @@ export function renderRecipePage(slug: string): string {
         ${content}
       </div>
 
-      <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook" target="_blank" rel="noopener noreferrer" class="github-link">
+      <div style="display:flex;gap:12px;align-items:center;margin-top:8px;">
+        <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook" target="_blank" rel="noopener noreferrer" class="github-link">
         ↗ ${t('recipe.view_github')}
-      </a>
+        </a>
+        <button class="share-btn" data-url="#/recipe/${recipe.slug}" style="padding:4px 12px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text-secondary);font-family:var(--font-mono);font-size:0.8rem;cursor:pointer;">
+          ↗ ${t('recipe.share')}
+        </button>
+      </div>
 
       ${renderRelated(recipe, lang)}
 

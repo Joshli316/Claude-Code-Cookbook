@@ -57,7 +57,6 @@ function renderContent(): void {
     if (typeof Prism !== 'undefined') {
       Prism.highlightAll();
     }
-    setupCopyButtons();
   });
 
   // Dynamic page title
@@ -75,23 +74,41 @@ function renderContent(): void {
   window.scrollTo(0, 0);
 }
 
-function setupCopyButtons(): void {
-  document.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const wrapper = (e.target as HTMLElement).closest('.code-block-wrapper');
+function setupDelegatedClicks(): void {
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+
+    // Copy button (event delegation — no per-element listeners)
+    if (target.classList.contains('copy-btn')) {
+      const wrapper = target.closest('.code-block-wrapper');
       const code = wrapper?.querySelector('code');
       if (code) {
         navigator.clipboard.writeText(code.textContent || '').then(() => {
-          const button = e.target as HTMLElement;
-          button.textContent = getLang() === 'zh' ? '已复制' : 'Copied!';
-          button.classList.add('copied');
+          target.textContent = getLang() === 'zh' ? '已复制' : 'Copied!';
+          target.classList.add('copied');
           setTimeout(() => {
-            button.textContent = getLang() === 'zh' ? '复制' : 'Copy';
-            button.classList.remove('copied');
+            target.textContent = getLang() === 'zh' ? '复制' : 'Copy';
+            target.classList.remove('copied');
           }, 2000);
-        }).catch(() => { /* clipboard permission denied */ });
+        }).catch(() => {
+          target.textContent = getLang() === 'zh' ? '失败' : 'Failed';
+          setTimeout(() => {
+            target.textContent = getLang() === 'zh' ? '复制' : 'Copy';
+          }, 2000);
+        });
       }
-    });
+    }
+
+    // Share button (copy recipe link)
+    if (target.classList.contains('share-btn')) {
+      const url = `${window.location.origin}/${target.dataset.url}`;
+      navigator.clipboard.writeText(url).then(() => {
+        target.textContent = getLang() === 'zh' ? '链接已复制！' : 'Link copied!';
+        setTimeout(() => {
+          target.textContent = `↗ ${getLang() === 'zh' ? '复制链接' : 'Copy link'}`;
+        }, 2000);
+      }).catch(() => {});
+    }
   });
 }
 
@@ -234,5 +251,6 @@ function initSearch(): void {
 
 // Initialize
 renderApp();
+setupDelegatedClicks();
 initRouter(renderContent);
 renderContent();

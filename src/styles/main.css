@@ -539,6 +539,7 @@ code:not(pre code) {
 .hero h1 {
   font-size: 2.25rem;
   margin-bottom: 12px;
+  text-shadow: 0 0 30px rgba(0, 232, 143, 0.15);
 }
 
 .hero-subtitle {
@@ -661,7 +662,7 @@ code:not(pre code) {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .sidebar {
     transform: translateX(-100%);
   }
