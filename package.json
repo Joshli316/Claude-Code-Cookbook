@@ -1,0 +1,16 @@
+{
+  "name": "claude-code-cookbook",
+  "version": "1.0.0",
+  "description": "Bilingual recipe site for Claude Code — workflow patterns, code recipes, and design techniques from 21+ shipped projects",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs && npx serve dist -l 3000",
+    "deploy": "npm run build && wrangler pages deploy dist/"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "^5.7.0",
+    "wrangler": "^4.0.0"
+  }
+}

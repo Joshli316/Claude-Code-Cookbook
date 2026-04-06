@@ -1,0 +1,175 @@
+// Claude Code Cookbook — Entry Point
+import { initRouter, navigate } from './router';
+import { renderSidebar } from './components/sidebar';
+import { renderTopbar } from './components/topbar';
+import { renderHome } from './components/home';
+import { renderRecipePage } from './components/recipe-page';
+import { renderCategory } from './components/category';
+import { t, getLang, toggleLang } from './i18n';
+
+declare const Prism: { highlightAll: () => void };
+
+function renderApp(): void {
+  const app = document.getElementById('app');
+  if (!app) return;
+
+  app.innerHTML = `
+    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="sidebar" id="sidebar">
+      ${renderSidebar()}
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        ${renderTopbar()}
+      </header>
+      <div class="content" id="content"></div>
+    </main>
+  `;
+
+  setupMobileMenu();
+  setupLangToggle();
+  initSearch();
+}
+
+function renderContent(): void {
+  const content = document.getElementById('content');
+  if (!content) return;
+
+  const hash = window.location.hash || '#/';
+
+  if (hash === '#/' || hash === '') {
+    content.innerHTML = renderHome();
+  } else if (hash.startsWith('#/recipe/')) {
+    const slug = hash.replace('#/recipe/', '');
+    content.innerHTML = renderRecipePage(slug);
+  } else if (hash.startsWith('#/category/')) {
+    const category = hash.replace('#/category/', '');
+    content.innerHTML = renderCategory(category);
+  } else {
+    content.innerHTML = renderHome();
+  }
+
+  // Syntax highlighting
+  requestAnimationFrame(() => {
+    if (typeof Prism !== 'undefined') {
+      Prism.highlightAll();
+    }
+    setupCopyButtons();
+    setupCardLinks();
+  });
+
+  // Update active sidebar link
+  updateActiveSidebarLink();
+
+  // Close mobile menu on navigation
+  closeMobileMenu();
+
+  // Scroll to top
+  const mainEl = document.querySelector('.main');
+  if (mainEl) mainEl.scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+function setupCopyButtons(): void {
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const wrapper = (e.target as HTMLElement).closest('.code-block-wrapper');
+      const code = wrapper?.querySelector('code');
+      if (code) {
+        navigator.clipboard.writeText(code.textContent || '').then(() => {
+          const button = e.target as HTMLElement;
+          button.textContent = getLang() === 'zh' ? '已复制' : 'Copied!';
+          button.classList.add('copied');
+          setTimeout(() => {
+            button.textContent = getLang() === 'zh' ? '复制' : 'Copy';
+            button.classList.remove('copied');
+          }, 2000);
+        });
+      }
+    });
+  });
+}
+
+function setupCardLinks(): void {
+  document.querySelectorAll('.recipe-card[data-href]').forEach(card => {
+    card.addEventListener('click', () => {
+      const href = (card as HTMLElement).dataset.href;
+      if (href) navigate(href);
+    });
+  });
+}
+
+function updateActiveSidebarLink(): void {
+  const hash = window.location.hash || '#/';
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === hash) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
+function setupMobileMenu(): void {
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  hamburger?.addEventListener('click', () => {
+    sidebar?.classList.toggle('open');
+    overlay?.classList.toggle('open');
+  });
+
+  overlay?.addEventListener('click', closeMobileMenu);
+}
+
+function setupLangToggle(): void {
+  document.getElementById('lang-toggle')?.addEventListener('click', () => {
+    toggleLang();
+    renderApp();
+    renderContent();
+  });
+}
+
+function closeMobileMenu(): void {
+  document.getElementById('sidebar')?.classList.remove('open');
+  document.getElementById('sidebar-overlay')?.classList.remove('open');
+}
+
+function initSearch(): void {
+  // Search is initialized from topbar component via event delegation
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  if (!searchInput) return;
+
+  // Import search dynamically
+  import('./search').then(({ handleSearch }) => {
+    searchInput.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value;
+      handleSearch(query);
+    });
+
+    searchInput.addEventListener('focus', () => {
+      if (searchInput.value.length > 0) {
+        import('./search').then(({ handleSearch }) => {
+          handleSearch(searchInput.value);
+        });
+      }
+    });
+
+    // Close search on click outside
+    document.addEventListener('click', (e) => {
+      const wrapper = document.querySelector('.search-wrapper');
+      if (wrapper && !wrapper.contains(e.target as Node)) {
+        const results = document.getElementById('search-results');
+        results?.classList.remove('open');
+      }
+    });
+  });
+}
+
+// Initialize
+renderApp();
+initRouter(renderContent);
+renderContent();

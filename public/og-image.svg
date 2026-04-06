@@ -1,0 +1,15 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0a0e14"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#00e88f"/>
+  <text x="100" y="200" font-family="monospace" font-size="72" font-weight="700" fill="#00e88f">&gt;_ Claude Code</text>
+  <text x="100" y="290" font-family="monospace" font-size="72" font-weight="700" fill="#e0e0e0">Cookbook</text>
+  <text x="100" y="380" font-family="monospace" font-size="28" fill="#7a8a9e">Workflow patterns, code recipes, and design techniques</text>
+  <text x="100" y="420" font-family="monospace" font-size="28" fill="#7a8a9e">distilled from 21+ shipped projects.</text>
+  <rect x="100" y="480" width="120" height="36" rx="4" fill="rgba(0,232,143,0.12)"/>
+  <text x="118" y="505" font-family="monospace" font-size="16" font-weight="600" fill="#00e88f">WORKFLOW</text>
+  <rect x="240" y="480" width="80" height="36" rx="4" fill="rgba(0,188,212,0.12)"/>
+  <text x="258" y="505" font-family="monospace" font-size="16" font-weight="600" fill="#00bcd4">CODE</text>
+  <rect x="340" y="480" width="100" height="36" rx="4" fill="rgba(245,166,35,0.12)"/>
+  <text x="358" y="505" font-family="monospace" font-size="16" font-weight="600" fill="#f5a623">DESIGN</text>
+  <text x="100" y="565" font-family="monospace" font-size="20" fill="#7a8a9e">Open source · Bilingual EN/ZH · Community recipes</text>
+</svg>
