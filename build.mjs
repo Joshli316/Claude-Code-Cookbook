@@ -19,5 +19,7 @@ await esbuild.build({
 cpSync('index.html', 'dist/index.html');
 cpSync('src/styles/main.css', 'dist/styles.css');
 cpSync('public/og-image.svg', 'dist/og-image.svg');
+cpSync('public/robots.txt', 'dist/robots.txt');
+cpSync('public/_headers', 'dist/_headers');
 
 console.log('✓ Build complete → dist/');

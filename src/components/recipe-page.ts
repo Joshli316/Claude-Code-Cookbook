@@ -7,7 +7,7 @@ import type { Recipe } from '../recipes/types';
 export function renderRecipePage(slug: string): string {
   const recipe = recipes.find(r => r.slug === slug);
   if (!recipe) {
-    return `<div style="padding:48px 0;text-align:center;color:var(--text-secondary);">Recipe not found.</div>`;
+    return `<div style="padding:48px 0;text-align:center;color:var(--text-secondary);">${t('error.recipe_not_found')} <a href="#/">${t('error.browse_all')}</a></div>`;
   }
 
   const lang = getLang();
@@ -21,6 +21,13 @@ export function renderRecipePage(slug: string): string {
 
   return `
     <article>
+      <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">
+        <a href="#/" style="color:var(--text-secondary);">Home</a>
+        <span style="margin:0 6px;">›</span>
+        <a href="#/category/${recipe.category}" style="color:var(--text-secondary);">${t(`category.${recipe.category}`)}</a>
+        <span style="margin:0 6px;">›</span>
+        <span style="color:var(--text-primary);">${title}</span>
+      </div>
       <div class="recipe-meta">
         <span class="pill pill-${recipe.category}">${t(`category.${recipe.category}`)}</span>
         <span class="pill badge-${recipe.difficulty}">${t(`difficulty.${recipe.difficulty}`)}</span>
@@ -35,7 +42,7 @@ export function renderRecipePage(slug: string): string {
         ${content}
       </div>
 
-      <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook" target="_blank" class="github-link">
+      <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook" target="_blank" rel="noopener noreferrer" class="github-link">
         ↗ ${t('recipe.view_github')}
       </a>
 

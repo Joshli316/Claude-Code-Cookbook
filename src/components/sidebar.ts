@@ -45,13 +45,13 @@ export function renderSidebar(): string {
       }).join('')}
 
       <div class="sidebar-section" style="margin-top: 8px;">
-        <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook/blob/main/CONTRIBUTING.md" target="_blank" class="sidebar-link">
+        <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="sidebar-link">
           + ${t('nav.contribute')}
         </a>
       </div>
     </nav>
     <div class="sidebar-footer">
-      <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook" target="_blank">${t('nav.github')} →</a>
+      <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook" target="_blank" rel="noopener noreferrer">${t('nav.github')} →</a>
     </div>
   `;
 }

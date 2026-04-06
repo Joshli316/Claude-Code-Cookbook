@@ -6,6 +6,7 @@ import { renderHome } from './components/home';
 import { renderRecipePage } from './components/recipe-page';
 import { renderCategory } from './components/category';
 import { t, getLang, toggleLang } from './i18n';
+import { recipes } from './recipes/index';
 
 declare const Prism: { highlightAll: () => void };
 
@@ -14,7 +15,8 @@ function renderApp(): void {
   if (!app) return;
 
   app.innerHTML = `
-    <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+    <a href="#content" class="skip-to-content" style="position:absolute;left:-9999px;top:0;padding:8px 16px;background:var(--accent-green);color:var(--bg);z-index:999;font-family:var(--font-mono);font-size:0.85rem;border-radius:0 0 4px 0;" onfocus="this.style.left='0'" onblur="this.style.left='-9999px'">Skip to content</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">☰</button>
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     <aside class="sidebar" id="sidebar">
       ${renderSidebar()}
@@ -59,6 +61,9 @@ function renderContent(): void {
     setupCardLinks();
   });
 
+  // Dynamic page title
+  updatePageTitle(hash);
+
   // Update active sidebar link
   updateActiveSidebarLink();
 
@@ -85,7 +90,7 @@ function setupCopyButtons(): void {
             button.textContent = getLang() === 'zh' ? '复制' : 'Copy';
             button.classList.remove('copied');
           }, 2000);
-        });
+        }).catch(() => { /* clipboard permission denied */ });
       }
     });
   });
@@ -106,10 +111,30 @@ function updateActiveSidebarLink(): void {
     const href = link.getAttribute('href');
     if (href === hash) {
       link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
     } else {
       link.classList.remove('active');
+      link.removeAttribute('aria-current');
     }
   });
+}
+
+function updatePageTitle(hash: string): void {
+  const base = 'Claude Code Cookbook';
+  if (hash.startsWith('#/recipe/')) {
+    const slug = hash.replace('#/recipe/', '');
+    const recipe = recipes.find(r => r.slug === slug);
+    if (recipe) {
+      const lang = getLang();
+      document.title = `${lang === 'zh' ? recipe.titleZh : recipe.title} — ${base}`;
+      return;
+    }
+  } else if (hash.startsWith('#/category/')) {
+    const cat = hash.replace('#/category/', '');
+    document.title = `${t(`category.${cat}`)} — ${base}`;
+    return;
+  }
+  document.title = `${base} — Recipes from 21+ Shipped Projects`;
 }
 
 function setupMobileMenu(): void {
@@ -120,6 +145,8 @@ function setupMobileMenu(): void {
   hamburger?.addEventListener('click', () => {
     sidebar?.classList.toggle('open');
     overlay?.classList.toggle('open');
+    const isOpen = sidebar?.classList.contains('open') ?? false;
+    hamburger?.setAttribute('aria-expanded', String(isOpen));
   });
 
   overlay?.addEventListener('click', closeMobileMenu);
@@ -145,9 +172,11 @@ function initSearch(): void {
 
   // Import search dynamically
   import('./search').then(({ handleSearch }) => {
+    let debounceTimer: ReturnType<typeof setTimeout>;
     searchInput.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer);
       const query = (e.target as HTMLInputElement).value;
-      handleSearch(query);
+      debounceTimer = setTimeout(() => handleSearch(query), 150);
     });
 
     searchInput.addEventListener('focus', () => {
@@ -155,6 +184,15 @@ function initSearch(): void {
         import('./search').then(({ handleSearch }) => {
           handleSearch(searchInput.value);
         });
+      }
+    });
+
+    // Close search on Escape key
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const results = document.getElementById('search-results');
+        results?.classList.remove('open');
+        searchInput.blur();
       }
     });
 

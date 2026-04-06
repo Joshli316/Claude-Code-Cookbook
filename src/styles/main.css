@@ -5,7 +5,7 @@
   --surface: #131920;
   --border: #1e2a35;
   --text-primary: #e0e0e0;
-  --text-secondary: #7a8a9e;
+  --text-secondary: #8a9bb0;
   --accent-green: #00e88f;
   --accent-cyan: #00bcd4;
   --accent-amber: #f5a623;
@@ -145,11 +145,13 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 8px;
+  padding: 12px;
   color: var(--text-primary);
   cursor: pointer;
   font-size: 1.2rem;
   line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .sidebar-overlay {
@@ -190,7 +192,8 @@ body {
 
 .search-input {
   width: 100%;
-  padding: 8px 12px 8px 36px;
+  padding: 10px 12px 10px 36px;
+  min-height: 44px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -412,6 +415,14 @@ a:hover {
   border-color: var(--accent-green);
 }
 
+.recipe-card:active {
+  transform: scale(0.98);
+}
+
+.sidebar-link:active {
+  background: rgba(0, 232, 143, 0.1);
+}
+
 .recipe-card-title {
   font-family: var(--font-mono);
   font-size: 1.1rem;
@@ -491,12 +502,17 @@ a:hover {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   cursor: pointer;
-  opacity: 0;
+  opacity: 0.3;
   transition: opacity 150ms ease, color 150ms ease;
 }
 
 .code-block-wrapper:hover .copy-btn {
   opacity: 1;
+}
+
+.copy-btn:active {
+  opacity: 1;
+  color: var(--accent-green);
 }
 
 .copy-btn:hover {
@@ -620,7 +636,7 @@ code:not(pre code) {
   padding: 8px 16px;
   margin: 16px 0;
   background: rgba(0, 232, 143, 0.03);
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 /* GitHub link */
@@ -683,8 +699,16 @@ code:not(pre code) {
     font-size: 1.75rem;
   }
 
+  .hero {
+    padding: 24px 0 16px;
+  }
+
   .hero h1 {
     font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
   }
 
   .recipe-nav {

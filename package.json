@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
+    "build:prod": "node build.mjs --minify",
     "dev": "node build.mjs && npx serve dist -l 3000",
-    "deploy": "npm run build && wrangler pages deploy dist/"
+    "deploy": "npm run build:prod && wrangler pages deploy dist/"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",

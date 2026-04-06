@@ -4,7 +4,13 @@ export type Lang = 'en' | 'zh';
 
 const LANG_KEY = 'cookbook-lang';
 
-let currentLang: Lang = (localStorage.getItem(LANG_KEY) as Lang) || 'en';
+let currentLang: Lang = (() => {
+  try {
+    return (localStorage.getItem(LANG_KEY) as Lang) || 'en';
+  } catch {
+    return 'en' as Lang;
+  }
+})();
 
 export function getLang(): Lang {
   return currentLang;
@@ -12,7 +18,7 @@ export function getLang(): Lang {
 
 export function setLang(lang: Lang): void {
   currentLang = lang;
-  localStorage.setItem(LANG_KEY, lang);
+  try { localStorage.setItem(LANG_KEY, lang); } catch { /* private browsing */ }
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
 }
 
@@ -49,6 +55,11 @@ const strings: Record<string, { en: string; zh: string }> = {
   'recipe.next': { en: 'Next', zh: '下一篇' },
   'recipe.view_github': { en: 'View on GitHub', zh: '在 GitHub 查看' },
   'recipe.contributed_by': { en: 'by', zh: '作者' },
+
+  // Errors
+  'error.recipe_not_found': { en: 'Recipe not found.', zh: '食谱未找到。' },
+  'error.category_not_found': { en: 'Category not found.', zh: '分类未找到。' },
+  'error.browse_all': { en: 'Browse all recipes', zh: '浏览所有食谱' },
 
   // Difficulty
   'difficulty.starter': { en: 'Starter', zh: '入门' },

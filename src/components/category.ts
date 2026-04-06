@@ -10,7 +10,7 @@ export function renderCategory(category: string): string {
   const filtered = recipes.filter(r => r.category === cat);
 
   if (filtered.length === 0) {
-    return `<div style="padding:48px 0;text-align:center;color:var(--text-secondary);">Category not found.</div>`;
+    return `<div style="padding:48px 0;text-align:center;color:var(--text-secondary);">${t('error.category_not_found')} <a href="#/">${t('error.browse_all')}</a></div>`;
   }
 
   return `

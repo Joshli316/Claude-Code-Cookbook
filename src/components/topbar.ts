@@ -15,8 +15,8 @@ export function renderTopbar(): string {
         autocomplete="off"
         spellcheck="false"
       >
-      <div class="search-results" id="search-results"></div>
+      <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
     </div>
-    <button class="lang-toggle" id="lang-toggle">${t('lang.toggle')}</button>
+    <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language">${t('lang.toggle')}</button>
   `;
 }
