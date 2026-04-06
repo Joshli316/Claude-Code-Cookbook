@@ -58,7 +58,6 @@ function renderContent(): void {
       Prism.highlightAll();
     }
     setupCopyButtons();
-    setupCardLinks();
   });
 
   // Dynamic page title
@@ -94,10 +93,6 @@ function setupCopyButtons(): void {
       }
     });
   });
-}
-
-function setupCardLinks(): void {
-  // Recipe cards are now <a> tags — no JS click handler needed
 }
 
 function updateActiveSidebarLink(): void {
@@ -176,9 +171,7 @@ function initSearch(): void {
 
     searchInput.addEventListener('focus', () => {
       if (searchInput.value.length > 0) {
-        import('./search').then(({ handleSearch }) => {
-          handleSearch(searchInput.value);
-        });
+        handleSearch(searchInput.value);
       }
     });
 

@@ -1,5 +1,5 @@
 import * as esbuild from 'esbuild';
-import { cpSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { cpSync, mkdirSync } from 'fs';
 
 mkdirSync('dist', { recursive: true });
 

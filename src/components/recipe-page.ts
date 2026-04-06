@@ -30,7 +30,7 @@ function renderRelated(current: Recipe, lang: string): string {
 
   return `
     <div style="margin-top:48px;">
-      <h2 style="margin-top:0;">${lang === 'zh' ? '相关食谱' : 'Related Recipes'}</h2>
+      <h2 style="margin-top:0;">${t('recipe.related')}</h2>
       <div class="cards-grid" style="margin-top:12px;">
         ${scored.map(s => {
           const title = lang === 'zh' ? s.recipe.titleZh : s.recipe.title;
@@ -68,7 +68,7 @@ export function renderRecipePage(slug: string): string {
   return `
     <article>
       <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:16px;">
-        <a href="#/" style="color:var(--text-secondary);">Home</a>
+        <a href="#/" style="color:var(--text-secondary);">${t('nav.home')}</a>
         <span style="margin:0 6px;">›</span>
         <a href="#/category/${recipe.category}" style="color:var(--text-secondary);">${t(`category.${recipe.category}`)}</a>
         <span style="margin:0 6px;">›</span>

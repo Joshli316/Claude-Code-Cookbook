@@ -54,6 +54,7 @@ const strings: Record<string, { en: string; zh: string }> = {
   'recipe.prev': { en: 'Previous', zh: '上一篇' },
   'recipe.next': { en: 'Next', zh: '下一篇' },
   'recipe.view_github': { en: 'View on GitHub', zh: '在 GitHub 查看' },
+  'recipe.related': { en: 'Related Recipes', zh: '相关食谱' },
   'recipe.contributed_by': { en: 'by', zh: '作者' },
 
   // Errors
