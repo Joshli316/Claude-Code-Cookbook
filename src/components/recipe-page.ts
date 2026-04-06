@@ -4,6 +4,52 @@ import { recipes } from '../recipes/index';
 import { getLang, t } from '../i18n';
 import type { Recipe } from '../recipes/types';
 
+function formatDate(dateStr: string, lang: string): string {
+  const d = new Date(dateStr);
+  if (lang === 'zh') {
+    return `${d.getFullYear()} 年 ${d.getMonth() + 1} 月更新`;
+  }
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `Updated ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function renderRelated(current: Recipe, lang: string): string {
+  const scored = recipes
+    .filter(r => r.slug !== current.slug)
+    .map(r => {
+      let score = 0;
+      if (r.category === current.category) score += 2;
+      score += r.tags.filter(tag => current.tags.includes(tag)).length;
+      return { recipe: r, score };
+    })
+    .filter(s => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+
+  if (scored.length === 0) return '';
+
+  return `
+    <div style="margin-top:48px;">
+      <h2 style="margin-top:0;">${lang === 'zh' ? '相关食谱' : 'Related Recipes'}</h2>
+      <div class="cards-grid" style="margin-top:12px;">
+        ${scored.map(s => {
+          const title = lang === 'zh' ? s.recipe.titleZh : s.recipe.title;
+          const desc = lang === 'zh' ? s.recipe.descriptionZh : s.recipe.description;
+          return `
+            <a href="#/recipe/${s.recipe.slug}" class="recipe-card">
+              <div class="recipe-card-title">${title}</div>
+              <div class="recipe-card-desc">${desc}</div>
+              <div class="recipe-card-footer">
+                <span class="pill pill-${s.recipe.category}">${t(`category.${s.recipe.category}`)}</span>
+              </div>
+            </a>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
 export function renderRecipePage(slug: string): string {
   const recipe = recipes.find(r => r.slug === slug);
   if (!recipe) {
@@ -35,7 +81,7 @@ export function renderRecipePage(slug: string): string {
       </div>
       <h1>${title}</h1>
       <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:24px;">
-        ${t('recipe.contributed_by')} ${recipe.author}
+        ${t('recipe.contributed_by')} ${recipe.author} · ${formatDate(recipe.updatedAt, lang)}
       </div>
 
       <div class="recipe-content">
@@ -45,6 +91,8 @@ export function renderRecipePage(slug: string): string {
       <a href="https://github.com/zhihuang-ai/Claude-Code-Cookbook" target="_blank" rel="noopener noreferrer" class="github-link">
         ↗ ${t('recipe.view_github')}
       </a>
+
+      ${renderRelated(recipe, lang)}
 
       <nav class="recipe-nav">
         ${prev ? `

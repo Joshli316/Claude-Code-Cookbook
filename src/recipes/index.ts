@@ -23,6 +23,7 @@ export const recipes: Recipe[] = [
     tags: ['planning', 'pipeline', 'quality'],
     difficulty: 'starter',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>The single most impactful pattern across 21+ projects: <strong>never plan and build in the same session</strong>. Separate them into three distinct phases, each with a clear deliverable.</p>
 
@@ -133,6 +134,7 @@ decisions and keep moving.`, 'bash')}
     tags: ['CLAUDE.md', 'context', 'conventions'],
     difficulty: 'starter',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>CLAUDE.md is the single most important file for Claude Code project quality. It's read at the start of every session, shaping all decisions. The difference between a good and bad CLAUDE.md is the difference between a productive session and a frustrating one.</p>
 
@@ -264,6 +266,7 @@ index.html
     tags: ['memory', 'sessions', 'context'],
     difficulty: 'intermediate',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>Claude Code sessions are ephemeral — when a session ends, the context is gone. Session memory solves this by saving structured notes that the next session can read to resume exactly where you left off.</p>
 
@@ -395,6 +398,7 @@ YYYY-MM-DD-简短描述.md
     tags: ['i18n', 'bilingual', 'TypeScript'],
     difficulty: 'starter',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>Most i18n libraries are overkill for a bilingual app. This pattern uses a single TypeScript file with a flat string map and a <code>t()</code> function. No build step, no JSON files, no runtime parsing.</p>
 
@@ -554,6 +558,7 @@ document.getElementById('lang-toggle')?.addEventListener('click', () => {
     tags: ['Cloudflare', 'deployment', 'wrangler'],
     difficulty: 'starter',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>Cloudflare Pages is the default deployment target for all projects. Free, fast, global CDN, custom domains. The workflow is simple — but the pre-deploy checklist prevents the mistakes that waste 30 minutes debugging.</p>
 
@@ -677,6 +682,7 @@ gh repo create your-project --public --source=. --push
     tags: ['esbuild', 'TypeScript', 'scaffold'],
     difficulty: 'intermediate',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>This scaffold boots a TypeScript SPA in under a minute. Esbuild bundles in milliseconds — no Webpack config hell, no Vite magic, just a straightforward build script.</p>
 
@@ -850,6 +856,7 @@ console.log('Build complete → dist/');`, 'javascript')}
     tags: ['routing', 'SPA', 'vanilla'],
     difficulty: 'intermediate',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>You don't need React Router or Vue Router for a simple SPA. Hash-based routing with <code>hashchange</code> events gives you everything you need: page navigation, URL params, and browser back/forward support.</p>
 
@@ -1043,6 +1050,7 @@ renderContent(); // 渲染初始路由`)}
     tags: ['dark-mode', 'theme', 'CSS'],
     difficulty: 'starter',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>The terminal aesthetic communicates "this is a developer tool" instantly. Dark background, monospace type, green accents — it's familiar to anyone who lives in a terminal. Here's the complete design system.</p>
 
@@ -1206,6 +1214,7 @@ h1, h2, h3, code, .mono {
     tags: ['responsive', 'mobile', 'layout'],
     difficulty: 'intermediate',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>Every project is tested at three breakpoints: 375px (phone), 768px (tablet), 1024px (desktop). The sidebar-to-hamburger pattern handles them all.</p>
 
@@ -1433,6 +1442,7 @@ h1, h2, h3, code, .mono {
     tags: ['accessibility', 'a11y', 'WCAG', 'dark-mode'],
     difficulty: 'advanced',
     author: 'Z Huang',
+    updatedAt: '2026-04-05',
     content: `
       <p>Dark mode isn't just "dark background with light text." The most common failures: insufficient contrast on secondary text, invisible focus indicators, and motion that triggers vestibular issues. Here's how to get it right.</p>
 

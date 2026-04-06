@@ -13,6 +13,7 @@ export interface Recipe {
   tags: string[];
   difficulty: Difficulty;
   author: string;
+  updatedAt: string;
   content: string;
   contentZh: string;
 }

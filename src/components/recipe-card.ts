@@ -9,7 +9,7 @@ export function renderRecipeCard(recipe: Recipe): string {
   const desc = lang === 'zh' ? recipe.descriptionZh : recipe.description;
 
   return `
-    <div class="recipe-card" data-href="#/recipe/${recipe.slug}" style="cursor:pointer;">
+    <a href="#/recipe/${recipe.slug}" class="recipe-card">
       <div class="recipe-card-title">${title}</div>
       <div class="recipe-card-desc">${desc}</div>
       <div class="recipe-card-footer">
@@ -17,6 +17,6 @@ export function renderRecipeCard(recipe: Recipe): string {
         <span class="pill badge-${recipe.difficulty}">${t(`difficulty.${recipe.difficulty}`)}</span>
         ${recipe.tags.slice(0, 2).map(tag => `<span class="tag">${tag}</span>`).join('')}
       </div>
-    </div>
+    </a>
   `;
 }

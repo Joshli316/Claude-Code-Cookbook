@@ -97,12 +97,7 @@ function setupCopyButtons(): void {
 }
 
 function setupCardLinks(): void {
-  document.querySelectorAll('.recipe-card[data-href]').forEach(card => {
-    card.addEventListener('click', () => {
-      const href = (card as HTMLElement).dataset.href;
-      if (href) navigate(href);
-    });
-  });
+  // Recipe cards are now <a> tags — no JS click handler needed
 }
 
 function updateActiveSidebarLink(): void {
@@ -187,14 +182,51 @@ function initSearch(): void {
       }
     });
 
-    // Close search on Escape key
+    // Keyboard navigation for search results
+    let activeIndex = -1;
     searchInput.addEventListener('keydown', (e) => {
+      const resultsEl = document.getElementById('search-results');
+      const items = resultsEl ? resultsEl.querySelectorAll('.search-result-item[data-slug]') : document.querySelectorAll('.nonexistent');
+
       if (e.key === 'Escape') {
-        const results = document.getElementById('search-results');
-        results?.classList.remove('open');
+        resultsEl?.classList.remove('open');
+        activeIndex = -1;
         searchInput.blur();
+        return;
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, items.length - 1);
+        updateActiveResult(items, activeIndex);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        updateActiveResult(items, activeIndex);
+      } else if (e.key === 'Enter' && activeIndex >= 0 && items[activeIndex]) {
+        e.preventDefault();
+        const slug = (items[activeIndex] as HTMLElement).dataset.slug;
+        if (slug) {
+          navigate(`#/recipe/${slug}`);
+          resultsEl?.classList.remove('open');
+          searchInput.value = '';
+          activeIndex = -1;
+        }
+      } else {
+        activeIndex = -1;
       }
     });
+
+    function updateActiveResult(items: NodeListOf<Element>, index: number): void {
+      items.forEach((item, i) => {
+        if (i === index) {
+          item.classList.add('search-result-active');
+          item.scrollIntoView({ block: 'nearest' });
+        } else {
+          item.classList.remove('search-result-active');
+        }
+      });
+    }
 
     // Close search on click outside
     document.addEventListener('click', (e) => {
